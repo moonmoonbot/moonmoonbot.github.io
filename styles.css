@@ -3,3 +3,18 @@
 @media(max-width:680px){.app-shell{width:min(100% - 1rem,1280px);min-height:100svh}.nav-toggle{display:block}.site-nav{position:absolute;z-index:20;top:64px;left:.5rem;right:.5rem;display:none;padding:.5rem;border:1px solid var(--line);border-radius:12px;background:var(--bg)}.site-nav.open{display:grid}.site-nav a{justify-content:start}.page-panel{padding:1rem 0;overflow:auto}.home-panel{display:block}.home-copy h1{font-size:clamp(2.6rem,14vw,4.5rem)}.home-copy .lead{margin:.7rem 0}.category-grid{margin-top:1.25rem;gap:.5rem}.category-card{min-height:92px;padding:.8rem}.category-card strong{font-size:1.1rem}.info-panel{display:block}.detail-cards,.feature-card,.email-card{margin-top:1.5rem}.panel-heading h2{font-size:clamp(2.8rem,15vw,4.5rem)}.game-library{display:block}.game-cards{gap:.6rem;margin-top:1rem}.game-card{min-height:190px;padding:1rem}.game-card>span{font-size:2rem}.game-card strong{font-size:1.5rem}.game-card p{font-size:.8rem}.game-topbar{grid-template-columns:1fr 1fr}.game-topbar>strong{display:none}.mini-score{text-align:right}.game-layout,.tetris-layout{display:flex;flex-direction:column}.canvas-wrap.square{width:min(100%,400px);flex:none}.tetris-board{width:min(100%,230px);height:auto;flex:none}.game-controls{width:100%;padding:.7rem}.direction-pad,.tetris-pad{margin:.7rem 0}.game-controls>p{display:none}footer .footer-status{display:none}}
 @media(max-height:700px) and (min-width:681px){.category-card{min-height:110px}.game-card{min-height:230px}.home-copy h1{font-size:clamp(3rem,8vh,5rem)}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+
+/* Home palette: a warmer dusk tone keeps the arcade pages unchanged. */
+:root{--dusk:#15162f;--lavender:#b8a8ff;--coral:#ff9eaa;--rose-glow:rgba(255,126,152,.18);--violet-glow:rgba(146,119,255,.2)}
+.home-panel{position:relative;isolation:isolate;overflow:hidden;border-radius:28px;padding-inline:clamp(1rem,3vw,2.5rem);background:linear-gradient(135deg,rgba(31,27,62,.84),rgba(11,24,43,.7) 52%,rgba(48,25,48,.68));box-shadow:inset 0 0 0 1px rgba(215,196,255,.08)}
+.home-panel::before,.home-panel::after{content:"";position:absolute;z-index:-1;width:26rem;aspect-ratio:1;border-radius:50%;filter:blur(70px);pointer-events:none}
+.home-panel::before{top:-13rem;right:10%;background:var(--violet-glow)}
+.home-panel::after{bottom:-16rem;left:-7rem;background:var(--rose-glow)}
+.home-panel .eyebrow{color:var(--coral)}
+.home-copy h1 span{color:var(--lavender);text-shadow:0 0 34px rgba(184,168,255,.16)}
+.home-panel .button.primary{background:linear-gradient(135deg,var(--lavender),var(--coral));color:#181129;box-shadow:0 12px 35px rgba(157,122,255,.2)}
+.home-panel .category-card{border-color:rgba(221,208,255,.14);background:linear-gradient(145deg,rgba(37,35,70,.82),rgba(19,27,47,.75));box-shadow:0 14px 36px rgba(3,7,18,.18);backdrop-filter:blur(10px)}
+.home-panel .category-card.accent{background:linear-gradient(145deg,rgba(91,57,103,.82),rgba(30,37,68,.82))}
+.home-panel .category-card small{color:var(--coral)}
+.home-panel .category-card:hover,.home-panel .category-card:focus-visible{border-color:var(--lavender);box-shadow:0 16px 42px rgba(116,85,187,.2)}
+@media(max-width:680px){.home-panel{border-radius:20px;padding-inline:.8rem}.home-panel::before,.home-panel::after{width:18rem;filter:blur(55px)}}

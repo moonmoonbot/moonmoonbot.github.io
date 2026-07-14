@@ -437,3 +437,125 @@ Blocker:
 - 실제 브라우저 시각·실기기 터치 검증: [사람 확인 필요]
 - 최종 상태: DEPLOYED
 ```
+
+---
+
+## 15. Step 8 Change Request Planning
+
+- 마지막 정상 배포 commit: `2c4ed157c3a4428707d8c14d162560475fe0bb02`
+- 마지막 정상 배포 URL: `https://moonmoonbot.github.io`
+- 전체 Change Request ID: `CR-20260714-001`
+- Change Item 목록:
+  - `CR-001`: 실제 수정 요청 명세 확보 (`UNKNOWN`, `SPEC_CHANGE`)
+- 사용자 요청 원문: `[배포된 웹사이트를 보고 수정하고 싶은 내용을 자유롭게 입력]`
+- 추가 자료 원문: `[문제가 발생한 기기, 브라우저, 재현 방법, 참고 디자인, 추가 요구사항 등을 입력]`
+- 사용자 요청 요약: 실제 수정 내용과 참고 자료가 placeholder로만 제공되어 구현 범위를 확정할 수 없음
+- 참고 자료: 구체 파일 언급 없음; 프로젝트에서 별도 CV/PDF/이미지 자료 확인되지 않음
+- 현재 상태: `HITL_REQUIRED`
+- 새 완료 기준:
+  - 실제 사용자 요청 원문이 제공됨
+  - 각 요청을 독립 Change Item으로 분리 가능함
+  - 현재/기대 동작과 객관적 검증 기준을 정의할 수 있음
+  - 필요 참고 파일의 이름/경로와 공개 가능 범위가 확인됨
+- 루프 실행 순서:
+  1. `CRL-001` 실제 요청 및 참고 자료 확보
+  2. `CRL-002` 요청별 변경 전 재현과 기준선 세분화
+  3. 실제 요청별 구현/검증 Loop `[사람 확인 필요]`
+  4. 전체 회귀 및 GitHub Pages 호환성 검증
+  5. 배포 승인 및 배포
+- 다음 Step 9에서 실행할 첫 번째 Loop ID: `CRL-001`
+- Rollback 기준:
+  - commit `2c4ed15`의 Home/Profile/Work/Games/Contact 패널과 Snake/Tetris를 정상 기준선으로 사용
+  - 기존 게임 테스트, 런타임 smoke, 상대 경로 또는 Pages HTTP 200 회귀 시 배포 중지
+  - 복구가 필요하면 destructive reset이 아닌 새 수정 커밋 사용
+- 사람 확인 필요 항목:
+  - placeholder가 아닌 실제 수정 요청
+  - 문제 화면/기능과 원하는 결과
+  - 기기·브라우저·재현 절차(문제 유형에 해당하는 경우)
+  - 참고 디자인/문서 파일명 또는 경로(존재하는 경우)
+  - 개인정보/문서 콘텐츠의 공개 범위(해당하는 경우)
+
+```text
+[Change Planning Log]
+- Change Request ID: CR-20260714-001
+- Change Item Count: 1
+- Baseline: 2c4ed157c3a4428707d8c14d162560475fe0bb02
+- Baseline URL: https://moonmoonbot.github.io
+- Baseline Verification: Snake PASS, Tetris PASS, browser smoke PASS, deployed index HTTP 200
+- Code Changes: none
+- Current State: HITL_REQUIRED
+- Reason: actual modification request and additional material were not supplied
+- Next Loop: CRL-001
+```
+
+## 16. Step 9 Change Re-loop Checkpoint
+
+```text
+[Change Re-loop Execution Log]
+- Change Request ID: CR-20260714-001
+- Loop ID: CRL-001
+- Change Item ID: CR-001
+- 시작 상태: HITL_REQUIRED
+- 변경 전 commit hash: 2c4ed157c3a4428707d8c14d162560475fe0bb02
+- 마지막 정상 배포 commit: 2c4ed157c3a4428707d8c14d162560475fe0bb02
+- 마지막 정상 배포 URL: https://moonmoonbot.github.io
+- 시작 Git 상태: AORR.md/MEMORY.md 수정, CHANGE_REQUEST.md 미추적 (Step 8 계획 문서 변경만 존재)
+- 기존 테스트 결과: Snake PASS(exit 0), Tetris PASS(exit 0), browser smoke PASS(exit 0)
+- 수정 전 웹사이트 상태: Home/Profile/Work/Games/Contact 카테고리 패널 정상 기준선
+- 수정 전 게임 상태: Snake와 Tetris 기준선 테스트 정상
+- Rollback 기준: commit 2c4ed15; destructive reset/force push 금지
+- 가설: 실제 요청이 제공되지 않아 CRL-001 완료 기준을 충족할 수 없다.
+- Act: 사용자 원문, 참고 자료, 완료 기준, 의존성 및 실행 순서 재확인
+- 변경 파일: CHANGE_REQUEST.md, AORR.md, MEMORY.md 실행 기록만 추가
+- Verifier: rg 기반 계획 일치 검사, game.test.js, tetris.test.js, browser-smoke.test.js
+- 결과: 계획 순서 일치; 기준선 회귀 PASS; 실제 변경 요청 부재
+- exit code: 모든 실행 Verifier 0
+- 오류 fingerprint: MISSING_ACTUAL_CHANGE_REQUEST
+- 실패 원인: UNKNOWN
+- Retry 횟수: 0
+- 종료 상태: HITL_REQUIRED
+- 다음 Loop: CRL-002 BLOCKED; 실제 사용자 요청 수신 후 CRL-001 재개
+- 현재 정상 commit 후보: 없음 (코드 변경 없음)
+- Claude Code CLI: 사용 불가 (실행 파일 미설치), 실제 사용 모델 없음
+```
+
+현재 사람 확인 필요 항목:
+
+- 배포된 사이트에서 실제로 바꾸고 싶은 내용
+- 현재 동작과 원하는 동작
+- 문제 발생 기기/브라우저/재현 방법(해당 시)
+- 참고 디자인이나 문서의 실제 파일명/경로(해당 시)
+
+## 17. CR-002 Home Palette Execution
+
+```text
+[Change Re-loop Execution Log]
+- Change Request ID: CR-20260714-001
+- Loop ID: CRL-003
+- Change Item ID: CR-002
+- 사용자 요청: 메인 페이지 색상을 조금 더 감성적으로 변경해주면 좋을것 같아.
+- 시작 상태: READY
+- 기준선 commit: 2c4ed157c3a4428707d8c14d162560475fe0bb02
+- 기준선 URL: https://moonmoonbot.github.io
+- 가설: Home에만 warm dusk/lavender/coral palette를 적용하면 다른 기능의 회귀 없이 요청 분위기를 충족할 수 있다.
+- Act: Home 배경 gradient, lavender/coral 강조색, glow, CTA gradient, translucent category cards 추가
+- 변경 파일: styles.css; CHANGE_REQUEST.md/AORR.md/MEMORY.md 기록 업데이트
+- Verifier: CSS token/selector 검사, game.test.js, tetris.test.js, browser-smoke.test.js, node --check script.js, git diff --check
+- 결과: 모든 verifier PASS
+- exit code: 모두 0
+- 오류 fingerprint: none
+- Retry 횟수: 0
+- 종료 상태: PASSED
+- 전체 상태: DEPLOY_APPROVAL_REQUIRED
+- 다음 Loop: 사용자 승인 후 commit/push/Pages 재배포
+- 현재 정상 commit 후보: 작업 트리 변경분 (미커밋)
+- Rollback 기준: 2c4ed15의 기존 Home palette와 전체 기능
+- Claude Code CLI: 사용 불가 (실행 파일 미설치), 실제 사용 모델 없음
+```
+
+Change Item 현재 상태:
+
+- `CR-001`: PASSED
+- `CR-002`: PASSED
+- HITL_REQUIRED: 없음
+- 시각 취향 최종 확인: 배포 후 사용자 검수

@@ -1074,3 +1074,105 @@ VERIFYING
 ```
 
 이 섹션은 이후 실제 개발 단계에서 verifier-first 방식으로 작업을 수행할 때 기준으로 사용한다.
+
+---
+
+## Change Request Loop Plan
+
+### CR-20260714-001
+
+- 기준선: `2c4ed157c3a4428707d8c14d162560475fe0bb02`
+- 배포 URL: `https://moonmoonbot.github.io`
+- 사용자 요청 원문: `[배포된 웹사이트를 보고 수정하고 싶은 내용을 자유롭게 입력]`
+- 추가 자료 원문: `[문제가 발생한 기기, 브라우저, 재현 방법, 참고 디자인, 추가 요구사항 등을 입력]`
+- Change Item: `CR-001` 실제 수정 요청 명세 확보
+- 전체 상태: `HITL_REQUIRED`
+
+#### CRL-001 — Change specification intake
+
+- Target: 실제 변경 대상, 현재 동작, 기대 동작, 재현 환경과 참고 자료 확보
+- Act: 사용자에게 placeholder가 아닌 실제 요청을 요청하고 원문 보존; 코드 변경 금지
+- Observe: 요청을 독립 Change Item으로 분해할 수 있는지, 완료 기준이 검증 가능한지 확인
+- Reason: 정보 부재는 `UNKNOWN`/`SPEC_CHANGE`로 분류하고 추측하지 않음
+- Repeat: 사용자 답변마다 누락 체크리스트를 재평가하되 임의로 의미를 보충하지 않음
+- Stop: 실제 요청이 확보되면 `CHANGE_PLANNED`; 미확보 시 `HITL_REQUIRED`
+- Verifier: 원문 전체 보존, 각 요구의 독립 ID 매핑, 모호성/HITL 표기 확인
+- HITL 조건: 요청/자료가 placeholder, 파일 불명확, 완료 기준 부재
+- 상태 전이: `CHANGE_INTAKE -> HITL_REQUIRED -> CHANGE_PLANNED`
+- 예상 수정 파일: `CHANGE_REQUEST.md`, `AORR.md`, `MEMORY.md`
+- 선행 Loop: 없음
+- 다음 Loop: `CRL-002`
+
+#### CRL-002 — Request-specific baseline and reproduction
+
+- Target: CRL-001에서 확정된 각 요청의 변경 전 재현과 실패 기준 확보
+- Act: 정상 배포본과 로컬 소스에서 요청별 Verifier 실행; 구현은 아직 변경하지 않음
+- Observe: 화면/로그/테스트/viewport/콘텐츠 차이를 기록
+- Reason: 실제 요청을 BUG, UI_UX, RESPONSIVE, CONTENT 등으로 재분류
+- Repeat: 동일 Verifier로 재현성을 확인하고 환경과 코드 원인을 분리
+- Stop: 재현 및 완료 기준 확보 시 요청별 구현 Loop를 `READY`로 전환
+- Verifier: 실제 요청 유형에 맞춰 CRL-001 완료 후 확정
+- HITL 조건: 재현 환경이나 기대 동작이 불명확함
+- 상태 전이: `BLOCKED -> READY -> VERIFYING -> PASSED/HITL_REQUIRED`
+- 예상 수정 파일: 계획 문서; 구현 파일은 실제 요청에 따라 동적으로 결정
+- 선행 Loop: `CRL-001`
+- 다음 Loop: 요청별 구현 Loop `[사람 확인 필요]`
+
+#### 공통 Retry 및 Rollback
+
+- 오류당 최대 Retry 3회, 동일 fingerprint 2회 반복 시 중지
+- 한 Retry에서 하나의 대표 원인과 최소 파일만 수정
+- 테스트 삭제/완화 및 기능 제거 금지
+- 기준선 회귀 시 배포하지 않고 `2c4ed15`의 정상 기능을 비교 기준으로 사용
+- 배포 후 회귀 복원은 destructive reset 대신 새 수정 커밋으로 수행
+
+### Step 9 Change Loop Execution
+
+```text
+[Change Loop Execution]
+- Change Request: CR-20260714-001
+- Loop ID: CRL-001
+- Change Item: CR-001
+- 시작 상태: HITL_REQUIRED
+- Target: placeholder가 아닌 실제 수정 요청 확보
+- Act: 사용자 요청/추가 자료 원문과 계획 의존성 재검증; 코드 수정 없음
+- Observe: 두 입력 모두 placeholder이며 구현·재현 가능한 요구사항 0개
+- Reason: UNKNOWN / fingerprint MISSING_ACTUAL_CHANGE_REQUEST
+- Verifier: 문서 원문 검사, Snake/Tetris/browser smoke 기준선 검사
+- 결과: 기준선 테스트 모두 exit 0; 명세 완료 기준 미충족
+- Retry: 0
+- Stop: HITL_REQUIRED
+- 다음 Loop: CRL-002 BLOCKED (CRL-001 의존성 미충족)
+```
+
+상태 전이:
+
+```text
+CRL-001: HITL_REQUIRED -> HITL_REQUIRED
+CRL-002: BLOCKED (not executed)
+Overall: HITL_REQUIRED
+```
+
+### CRL-003 — Home emotional palette
+
+```text
+[Change Loop Execution]
+- Change Request: CR-20260714-001
+- Loop ID: CRL-003
+- Change Item: CR-002
+- 사용자 원문: 메인 페이지 색상을 조금 더 감성적으로 변경해주면 좋을것 같아.
+- 시작 상태: READY
+- Target: 구조와 기능을 유지하며 Home 색상을 감성적인 warm dusk palette로 개선
+- Act: styles.css에 Home 전용 dusk/lavender/coral token, glow, gradient CTA, glass card override 추가
+- Observe: palette selector 존재; 모바일 680px override 존재; 코드/게임 회귀 모두 통과
+- Reason: UI_UX / SPEC_CHANGE
+- Verifier: rg CSS 구조 검사, game.test.js, tetris.test.js, browser-smoke.test.js, node --check, git diff --check
+- 결과: 모두 exit 0
+- Retry: 0
+- Stop: PASSED
+- 상태 전이: READY -> ACTING -> VERIFYING -> PASSED
+- 변경 파일: styles.css
+- 다음 상태: DEPLOY_APPROVAL_REQUIRED
+```
+
+CRL-001은 실제 요청 확보로 `PASSED`, CRL-002는 구체 요청 재현 완료로 `PASSED`, CRL-003은 구현/검증 완료로 `PASSED` 처리한다.
