@@ -82,7 +82,7 @@
 
 ## 5. Current State
 
-- 현재 상태: `DEPLOY_APPROVAL_REQUIRED` (전체 로컬 구현·자동 검증 완료, 배포 승인 대기)
+- 현재 상태: `DEPLOYED` (GitHub Pages 최초 배포 및 공개 자산 검증 완료)
 - 완료한 루프:
   - AORR 상태 머신 설계 완료
   - Self-Correcting TDD Loop 설계 완료
@@ -93,7 +93,7 @@
   - 지렁이 게임 전체 상태·로직·렌더링·키보드·터치·Swipe 구현 완료
   - 로컬 HTTP 및 자동 회귀 테스트 완료
 - 다음 루프:
-  - 사용자 승인 후 commit, push, GitHub Pages 배포 및 배포본 검증
+  - 확인된 개인 이름, 소개, 프로젝트와 연락처 콘텐츠 반영
 - 현재 Retry 횟수: `0`
 - 현재 오류 fingerprint: `none` (이번 루프 목표 기준)
 - Blocker: `none`
@@ -284,7 +284,7 @@ Claude verifier 정책:
 현재 프로젝트는 다음 상태로 관리한다.
 
 ```text
-Status: DEPLOY_APPROVAL_REQUIRED
+Status: DEPLOYED
 Completed:
 - AORR 상태 머신 설계
 - Self-Correcting TDD Loop 설계
@@ -293,7 +293,7 @@ Completed:
 - 로컬 HTTP, 게임 로직, 런타임, 링크 및 Pages 호환성 자동 검증
 
 Next:
-- 사용자 배포 승인
+- 확인된 개인 프로필 콘텐츠 반영
 
 Retry:
 - 0
@@ -418,4 +418,22 @@ Blocker:
 - 종료 상태: DEPLOY_APPROVAL_REQUIRED
 - 배포 대상: https://github.com/moonmoonbot/moonmoonbot.github.io
 - 예상 주소: https://moonmoonbot.github.io
+```
+
+```text
+[Deployment Log]
+- 배포 시각: 2026-07-14 14:36:14 KST
+- 사용자 승인: 명시적 승인 확인
+- 대상 저장소: https://github.com/moonmoonbot/moonmoonbot.github.io
+- 대상 브랜치: main
+- 구현 커밋: 4c4a904
+- push 결과: `beba0cf..4c4a904 main -> main`
+- 배포 주소: https://moonmoonbot.github.io
+- HTTP 결과: `/index.html`, `/styles.css`, `/game.js`, `/script.js` 모두 HTTP 200
+- 배포본 검증: Professional Portfolio title, Games 섹션, game.js 및 script.js 연결, SnakeGame 상태 엔진, 키보드·touch·RAF 코드 반영 확인
+- 비밀정보: github_token.txt/env_settings.txt/.env 부재; .gitignore 보호 적용; staged 코드에서 토큰 패턴 없음
+- 인증 방식: 기존 SSH remote 인증 사용; 토큰 파일 미사용
+- 캐시 관찰: 최초 루트 요청은 이전 Jekyll HTML을 반환했으나 commit 쿼리로 캐시 우회 시 새 index 및 게임 자산 반영 확인
+- 실제 브라우저 시각·실기기 터치 검증: [사람 확인 필요]
+- 최종 상태: DEPLOYED
 ```
