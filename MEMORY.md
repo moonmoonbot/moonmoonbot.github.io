@@ -578,3 +578,23 @@ Change Item 현재 상태:
 - 최종 상태: DEPLOYED
 - 사람 확인 필요: 감성 색상 취향의 최종 시각 검수
 ```
+
+## 19. CR-003 Game Focus Execution
+
+```text
+- Loop ID: CRL-004
+- Change Item ID: CR-003
+- 사용자 요청: 게임 선택 후 게임 화면으로 바로 포커싱
+- 시작 상태: READY
+- 가설: preventScroll focus만 호출해 panel 내부 scroll 위치가 바뀌지 않는다.
+- 변경 전 결과: Tetris canvas focus PASS, scrollIntoView FAIL
+- Act: Snake/Tetris 공통 canvas에 scrollIntoView({behavior:smooth, block:center}) 후 focus
+- 변경 파일: script.js, browser-smoke.test.js, 실행 기록 문서
+- Verifier: browser-smoke.test.js, game.test.js, tetris.test.js, node --check script.js
+- 결과: 모두 PASS / exit 0
+- 오류 fingerprint: none
+- Retry: 0
+- 종료 상태: PASSED
+- 전체 상태: DEPLOY_APPROVAL_REQUIRED
+- Rollback 기준: 8181ab3
+```

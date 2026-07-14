@@ -2,7 +2,7 @@
 const assert=require('node:assert/strict');
 global.SnakeGame=require('./game.js').SnakeGame;
 global.TetrisGame=require('./tetris.js').TetrisGame;
-class E{constructor(dataset={}){this.dataset=dataset;this.listeners=new Map();this.attrs=new Map();this.classList={add(){},remove(){},toggle(){}};this.hidden=false;this.disabled=false;this.textContent='';}addEventListener(t,f){this.listeners.set(t,f)}setAttribute(k,v){this.attrs.set(k,v)}getAttribute(k){return this.attrs.get(k)||null}querySelector(){return label}focus(){}}
+class E{constructor(dataset={}){this.dataset=dataset;this.listeners=new Map();this.attrs=new Map();this.classList={add(){},remove(){},toggle(){}};this.hidden=false;this.disabled=false;this.textContent='';this.focused=false;this.scrolled=false;}addEventListener(t,f){this.listeners.set(t,f)}setAttribute(k,v){this.attrs.set(k,v)}getAttribute(k){return this.attrs.get(k)||null}querySelector(){return label}focus(){this.focused=true}scrollIntoView(){this.scrolled=true}}
 const ctx={fillRect(){},beginPath(){},arc(){},fill(){},strokeRect(){}};
 const label=new E(),nav=new E(),toggle=new E();toggle.setAttribute('aria-expanded','false');
 const panels=['home','profile','work','games','contact'].map(panel=>new E({panel}));
@@ -23,5 +23,8 @@ assert.equal(frames.length,1,'one shared animation frame must be scheduled');
 assert.ok(map.get('#start-game').listeners.has('click'));assert.ok(map.get('#tetris-start').listeners.has('click'));
 assert.ok(document.listeners.has('keydown'));assert.ok(map.get('#game-canvas').listeners.has('touchstart'));
 assert.equal(openGames.every(element=>element.listeners.has('click')),true);
+openGames[1].listeners.get('click')();
+assert.equal(map.get('#tetris-canvas').focused,true,'Tetris canvas must receive focus when selected');
+assert.equal(map.get('#tetris-canvas').scrolled,true,'Tetris canvas must scroll into view when selected');
 frames.shift()(200);assert.equal(frames.length,1,'one successor frame must be scheduled');
 console.log('browser runtime smoke: PASS');

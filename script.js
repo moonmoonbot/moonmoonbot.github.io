@@ -26,7 +26,7 @@ window.addEventListener('resize',()=>{if(innerWidth>680)closeNav();});
 $('#current-year').textContent=new Date().getFullYear();
 
 const gameLibrary=$('#game-library');
-function openGame(name){gameLibrary.hidden=true;$$('[data-game-view]').forEach(view=>view.hidden=view.dataset.gameView!==name);activeGame=name;if(name==='snake')snakeCanvas.focus({preventScroll:true});else tetrisCanvas.focus({preventScroll:true});}
+function openGame(name){gameLibrary.hidden=true;$$('[data-game-view]').forEach(view=>view.hidden=view.dataset.gameView!==name);activeGame=name;const target=name==='snake'?snakeCanvas:tetrisCanvas;target.scrollIntoView({behavior:'smooth',block:'center',inline:'nearest'});target.focus({preventScroll:true});}
 function closeGame(){gameLibrary.hidden=false;$$('[data-game-view]').forEach(view=>view.hidden=true);if(snake.state==='running')snake.togglePause();if(tetris.state==='running')tetris.togglePause();activeGame=null;updateSnakeUI();updateTetrisUI();}
 $$('[data-open-game]').forEach(button=>button.addEventListener('click',()=>openGame(button.dataset.openGame)));
 $$('[data-game-back]').forEach(button=>button.addEventListener('click',closeGame));

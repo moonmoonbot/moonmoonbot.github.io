@@ -1188,3 +1188,18 @@ CRL-001은 실제 요청 확보로 `PASSED`, CRL-002는 구체 요청 재현 완
 - CR-002: DEPLOYED
 - Overall: DEPLOYED
 ```
+
+```text
+[Change Loop Execution]
+- Change Request: CR-20260714-001
+- Loop ID: CRL-004
+- Change Item: CR-003
+- Target: 게임 선택 즉시 해당 canvas를 viewport에 표시하고 키보드 포커스 이동
+- Act: openGame에 scrollIntoView(center/smooth)와 공통 target focus 적용
+- Observe Before: focus=true, scroll=false (test failure)
+- Observe After: focus=true, scroll=true; Snake/Tetris regression PASS
+- Reason: NAVIGATION / ACCESSIBILITY
+- Retry: 0
+- 상태 전이: READY -> ACTING -> VERIFYING -> PASSED
+- 다음 상태: DEPLOY_APPROVAL_REQUIRED
+```
