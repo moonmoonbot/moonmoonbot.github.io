@@ -1176,3 +1176,15 @@ Overall: HITL_REQUIRED
 ```
 
 CRL-001은 실제 요청 확보로 `PASSED`, CRL-002는 구체 요청 재현 완료로 `PASSED`, CRL-003은 구현/검증 완료로 `PASSED` 처리한다.
+
+```text
+[Deployment Transition]
+- Change Request: CR-20260714-001
+- Approval: confirmed
+- Implementation Commit: 80c4dea
+- Push: success
+- Pages Verification: Home palette CSS token found on https://moonmoonbot.github.io/styles.css
+- CR-001: DEPLOYED
+- CR-002: DEPLOYED
+- Overall: DEPLOYED
+```

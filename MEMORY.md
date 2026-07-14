@@ -559,3 +559,22 @@ Change Item 현재 상태:
 - `CR-002`: PASSED
 - HITL_REQUIRED: 없음
 - 시각 취향 최종 확인: 배포 후 사용자 검수
+
+## 18. CR-20260714-001 Deployment
+
+```text
+[Change Deployment Log]
+- 사용자 승인: 확인
+- 구현 commit: 80c4dea
+- push 결과: 2c4ed15..80c4dea main -> main
+- 배포 URL: https://moonmoonbot.github.io
+- HTTP/자산 결과: 공개 styles.css 로드 성공
+- Change Item 검증: Home dusk/lavender/coral token 및 전용 gradient/glow/card CSS 반영 확인
+- 배포 후 회귀 기준: 로컬 Snake/Tetris/browser smoke 모두 PASS
+- 새 마지막 정상 배포 commit: 80c4dea
+- 새 마지막 정상 배포 URL: https://moonmoonbot.github.io
+- CR-001 상태: DEPLOYED
+- CR-002 상태: DEPLOYED
+- 최종 상태: DEPLOYED
+- 사람 확인 필요: 감성 색상 취향의 최종 시각 검수
+```
