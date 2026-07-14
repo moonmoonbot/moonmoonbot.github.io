@@ -1,67 +1,27 @@
 'use strict';
-
-const assert = require('node:assert/strict');
-global.SnakeGame = require('./game.js').SnakeGame;
-
-class FakeElement {
-  constructor() {
-    this.attributes = new Map();
-    this.listeners = new Map();
-    this.dataset = {};
-    this.classList = { add() {}, remove() {}, toggle() {} };
-    this.textContent = '';
-    this.hidden = false;
-    this.disabled = false;
-  }
-  addEventListener(type, handler) { this.listeners.set(type, handler); }
-  setAttribute(name, value) { this.attributes.set(name, value); }
-  getAttribute(name) { return this.attributes.get(name) || null; }
-  querySelector() { return elements.menuLabel; }
-  closest(selector) { return selector === 'a' ? this : null; }
-  focus() {}
-  getBoundingClientRect() { return { top: 0, bottom: 700 }; }
-}
-
-const context = { fillRect() {}, beginPath() {}, moveTo() {}, lineTo() {}, stroke() {}, arc() {}, fill() {} };
-const selectors = ['navToggle','siteNav','year','canvas','score','best','overlay','message','hint','status','start','pause','restart','games','menuLabel'];
-const elements = Object.fromEntries(selectors.map(name => [name, new FakeElement()]));
-elements.navToggle.setAttribute('aria-expanded', 'false');
-elements.canvas.width = 400;
-elements.canvas.height = 400;
-elements.canvas.getContext = () => context;
-const directions = ['up','left','down','right'].map(direction => { const item = new FakeElement(); item.dataset.direction = direction; return item; });
-const selectorMap = new Map([
-  ['.nav-toggle', elements.navToggle], ['.site-nav', elements.siteNav], ['#current-year', elements.year],
-  ['#game-canvas', elements.canvas], ['#score', elements.score], ['#best-score', elements.best],
-  ['#game-overlay', elements.overlay], ['#game-message', elements.message], ['#game-hint', elements.hint],
-  ['#game-status', elements.status], ['#start-game', elements.start], ['#pause-game', elements.pause],
-  ['#restart-game', elements.restart], ['#games', elements.games]
-]);
-
-global.document = {
-  listeners: new Map(),
-  querySelector: selector => selectorMap.get(selector),
-  querySelectorAll: selector => selector === '[data-direction]' ? directions : [],
-  addEventListener(type, handler) { this.listeners.set(type, handler); }
-};
-global.window = { innerWidth: 1440, innerHeight: 900, addEventListener() {} };
-global.localStorage = { getItem: () => null, setItem() {} };
-const frames = [];
-global.requestAnimationFrame = callback => { frames.push(callback); return frames.length; };
-
+const assert=require('node:assert/strict');
+global.SnakeGame=require('./game.js').SnakeGame;
+global.TetrisGame=require('./tetris.js').TetrisGame;
+class E{constructor(dataset={}){this.dataset=dataset;this.listeners=new Map();this.attrs=new Map();this.classList={add(){},remove(){},toggle(){}};this.hidden=false;this.disabled=false;this.textContent='';}addEventListener(t,f){this.listeners.set(t,f)}setAttribute(k,v){this.attrs.set(k,v)}getAttribute(k){return this.attrs.get(k)||null}querySelector(){return label}focus(){}}
+const ctx={fillRect(){},beginPath(){},arc(){},fill(){},strokeRect(){}};
+const label=new E(),nav=new E(),toggle=new E();toggle.setAttribute('aria-expanded','false');
+const panels=['home','profile','work','games','contact'].map(panel=>new E({panel}));
+const panelLinks=['home','games'].map(panelLink=>new E({panelLink}));
+const gameViews=['snake','tetris'].map(gameView=>new E({gameView}));
+const openGames=['snake','tetris'].map(openGame=>new E({openGame}));
+const backs=[new E(),new E()];
+const snakeDirections=['up','left','down','right'].map(snakeDirection=>new E({snakeDirection}));
+const tetrisActions=['left','rotate','right','down','drop'].map(tetrisAction=>new E({tetrisAction}));
+const ids=['main-content','current-year','game-library','game-canvas','game-overlay','game-message','game-hint','game-status','score','best-score','start-game','pause-game','restart-game','tetris-canvas','tetris-overlay','tetris-message','tetris-hint','tetris-status','tetris-score','tetris-lines','tetris-best','tetris-start','tetris-pause','tetris-restart'];
+const map=new Map(ids.map(id=>[`#${id}`,new E()]));map.set('#site-nav',nav);map.set('.nav-toggle',toggle);
+for(const key of ['#game-canvas','#tetris-canvas']){const canvas=map.get(key);canvas.width=key.includes('tetris')?300:400;canvas.height=key.includes('tetris')?600:400;canvas.getContext=()=>ctx;}
+global.document={listeners:new Map(),querySelector:s=>map.get(s),querySelectorAll:s=>({'[data-panel]':panels,'[data-panel-link]':panelLinks,'[data-game-view]':gameViews,'[data-open-game]':openGames,'[data-game-back]':backs,'[data-snake-direction]':snakeDirections,'[data-tetris-action]':tetrisActions}[s]||[]),addEventListener(t,f){this.listeners.set(t,f)}};
+global.window={addEventListener(){}};global.innerWidth=1440;global.location={hash:''};global.history={pushState(_a,_b,hash){location.hash=hash}};global.localStorage={getItem(){return null},setItem(){}};
+const frames=[];global.requestAnimationFrame=callback=>{frames.push(callback);return frames.length};
 require('./script.js');
-
-assert.equal(frames.length, 1, 'initialization must schedule exactly one animation frame');
-assert.equal(elements.score.textContent, 0);
-assert.equal(elements.best.textContent, 0);
-assert.ok(elements.start.listeners.has('click'));
-assert.ok(elements.pause.listeners.has('click'));
-assert.ok(elements.restart.listeners.has('click'));
-assert.ok(elements.canvas.listeners.has('touchstart'));
-assert.ok(elements.canvas.listeners.has('touchmove'));
-assert.ok(elements.canvas.listeners.has('touchend'));
-assert.ok(global.document.listeners.has('keydown'));
-elements.start.listeners.get('click')();
-frames.shift()(200);
-assert.equal(frames.length, 1, 'each frame must schedule only one successor');
+assert.equal(frames.length,1,'one shared animation frame must be scheduled');
+assert.ok(map.get('#start-game').listeners.has('click'));assert.ok(map.get('#tetris-start').listeners.has('click'));
+assert.ok(document.listeners.has('keydown'));assert.ok(map.get('#game-canvas').listeners.has('touchstart'));
+assert.equal(openGames.every(element=>element.listeners.has('click')),true);
+frames.shift()(200);assert.equal(frames.length,1,'one successor frame must be scheduled');
 console.log('browser runtime smoke: PASS');

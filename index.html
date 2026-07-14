@@ -3,119 +3,92 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="개인 프로페셔널 웹사이트와 브라우저 게임 포트폴리오" />
-  <title>Professional Portfolio</title>
+  <meta name="description" content="moonmoonbot의 프로필, 작업과 브라우저 게임" />
+  <title>moonmoonbot · Portfolio & Games</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <a class="skip-link" href="#main-content">본문으로 건너뛰기</a>
-  <header class="site-header">
-    <div class="container nav-wrap">
-      <a class="brand" href="#home" aria-label="홈으로 이동">moonmoonbot</a>
-      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
-        <span class="sr-only">메뉴 열기</span>
-        <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
-      </button>
-      <nav id="site-nav" class="site-nav" aria-label="주요 메뉴">
-        <a href="#home">Home</a>
-        <a href="#profile">Profile</a>
-        <a href="#about">About</a>
-        <a href="#projects">Projects</a>
-        <a href="#games">Games</a>
-        <a href="#contact">Contact</a>
+  <div class="app-shell">
+    <header class="site-header">
+      <a class="brand" href="#home" data-panel-link="home" aria-label="홈으로 이동"><span>●</span> moonmoonbot</a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span class="sr-only">메뉴 열기</span><i></i><i></i><i></i></button>
+      <nav id="site-nav" class="site-nav" aria-label="카테고리">
+        <a href="#home" data-panel-link="home" class="active">Home</a>
+        <a href="#profile" data-panel-link="profile">Profile</a>
+        <a href="#work" data-panel-link="work">Work</a>
+        <a href="#games" data-panel-link="games">Games</a>
+        <a href="#contact" data-panel-link="contact">Contact</a>
       </nav>
-    </div>
-  </header>
+    </header>
 
-  <main id="main-content">
-    <section id="home" class="hero section" aria-labelledby="hero-title">
-      <div class="container hero-grid">
-        <div>
-          <p class="eyebrow">Personal Portfolio · GitHub Pages</p>
-          <h1 id="hero-title">안녕하세요.<br /><span>moonmoonbot</span>입니다.</h1>
-          <p class="lead">Samsung Electronics MX<br />Cloud Infra R&amp;D Group</p>
-          <div class="hero-actions">
-            <a class="button primary" href="#projects">작업 보기</a>
-            <a class="button secondary" href="#games">게임 플레이</a>
+    <main id="main-content" class="panel-area">
+      <section id="home" class="page-panel home-panel active" data-panel="home" aria-labelledby="home-title">
+        <div class="home-copy">
+          <p class="eyebrow">Samsung Electronics MX · Cloud Infra R&amp;D Group</p>
+          <h1 id="home-title">안녕하세요.<br /><span>moonmoonbot</span>입니다.</h1>
+          <p class="lead">Cloud infrastructure를 연구하고, 새로운 것을 만들고 탐구합니다.</p>
+          <button class="button primary" type="button" data-panel-link="games">게임하기 <span aria-hidden="true">→</span></button>
+        </div>
+        <div class="category-grid" aria-label="사이트 카테고리">
+          <button class="category-card" type="button" data-panel-link="profile"><small>01</small><strong>Profile</strong><span>소속과 소개</span></button>
+          <button class="category-card" type="button" data-panel-link="work"><small>02</small><strong>Work</strong><span>Selected work</span></button>
+          <button class="category-card accent" type="button" data-panel-link="games"><small>03</small><strong>Games</strong><span>Snake · Tetris</span></button>
+          <button class="category-card" type="button" data-panel-link="contact"><small>04</small><strong>Contact</strong><span>이메일 연락</span></button>
+        </div>
+      </section>
+
+      <section id="profile" class="page-panel info-panel" data-panel="profile" aria-labelledby="profile-title" hidden>
+        <div class="panel-heading"><p class="eyebrow">01 · Profile</p><h2 id="profile-title">moonmoonbot</h2><p>만들고 탐구하는 사람</p></div>
+        <dl class="detail-cards">
+          <div><dt>Organization</dt><dd>Samsung Electronics MX</dd></div>
+          <div><dt>Group</dt><dd>Cloud Infra R&amp;D Group</dd></div>
+          <div><dt>Focus</dt><dd>Cloud Infrastructure</dd></div>
+        </dl>
+      </section>
+
+      <section id="work" class="page-panel info-panel" data-panel="work" aria-labelledby="work-title" hidden>
+        <div class="panel-heading"><p class="eyebrow">02 · Selected Work</p><h2 id="work-title">Samsung<br />Private Cloud</h2></div>
+        <article class="feature-card"><span>Selected Work</span><strong>Samsung Private Cloud</strong><p>Cloud Infra R&amp;D Group</p></article>
+      </section>
+
+      <section id="games" class="page-panel games-panel" data-panel="games" aria-labelledby="games-title" hidden>
+        <div id="game-library" class="game-library">
+          <div class="panel-heading compact"><p class="eyebrow">03 · Arcade</p><h2 id="games-title">게임을 선택하세요</h2><p>브라우저에서 바로 플레이할 수 있습니다.</p></div>
+          <div class="game-cards">
+            <button type="button" class="game-card snake-card" data-open-game="snake"><span class="pixel-icon">●●●</span><small>Classic</small><strong>Snake</strong><p>먹이를 먹고 길어지는 지렁이를 조작하세요.</p><b>Play →</b></button>
+            <button type="button" class="game-card tetris-card" data-open-game="tetris"><span class="block-icon">▦</span><small>New</small><strong>Tetris</strong><p>블록을 쌓고 완성된 라인을 제거하세요.</p><b>Play →</b></button>
           </div>
         </div>
-        <aside class="status-card" aria-label="프로필 요약">
-          <span class="status-dot" aria-hidden="true"></span>
-          <p>Profile</p>
-          <strong>moonmoonbot</strong>
-          <dl>
-            <div><dt>Organization</dt><dd>Samsung Electronics MX</dd></div>
-            <div><dt>Group</dt><dd>Cloud Infra R&amp;D Group</dd></div>
-          </dl>
-        </aside>
-      </div>
-    </section>
 
-    <section id="profile" class="section profile-section" aria-labelledby="profile-title">
-      <div class="container split-layout">
-        <div><p class="section-kicker">01 · Profile</p><h2 id="profile-title">moonmoonbot</h2></div>
-        <div class="prose profile-details">
-          <p>Samsung Electronics MX</p>
-          <p>Cloud Infra R&amp;D Group</p>
-          <a href="mailto:moonmoon.kim@samsung.com">moonmoon.kim@samsung.com</a>
-        </div>
-      </div>
-    </section>
-
-    <section id="about" class="section" aria-labelledby="about-title">
-      <div class="container split-layout">
-        <div><p class="section-kicker">02 · About</p><h2 id="about-title">소개</h2></div>
-        <div class="prose">
-          <p>Samsung Electronics MX Cloud Infra R&amp;D Group</p>
-          <div class="tag-list" aria-label="소속 및 관심 분야"><span>Samsung Electronics</span><span>MX</span><span>Cloud Infra</span><span>R&amp;D</span></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="projects" class="section section-muted" aria-labelledby="projects-title">
-      <div class="container">
-        <p class="section-kicker">03 · Projects</p>
-        <h2 id="projects-title">Selected Work</h2>
-        <div class="project-grid single-project">
-          <article class="project-card"><span>Selected Work</span><h3>Samsung Private Cloud</h3></article>
-        </div>
-      </div>
-    </section>
-
-    <section id="games" class="section games-section" aria-labelledby="games-title">
-      <div class="container">
-        <p class="section-kicker">04 · Games</p>
-        <div class="games-heading"><div><h2 id="games-title">Snake</h2><p>키보드나 화면 버튼으로 플레이하는 클래식 지렁이 게임입니다.</p></div><span class="game-badge">Playable</span></div>
-        <div class="game-shell">
-          <div class="game-panel">
-            <div class="scoreboard" aria-label="게임 점수"><p>Score <strong id="score">0</strong></p><p>Best <strong id="best-score">0</strong></p></div>
-            <div class="canvas-wrap">
-              <canvas id="game-canvas" width="400" height="400" aria-label="지렁이 게임 보드" tabindex="0"></canvas>
-              <div id="game-overlay" class="game-overlay"><strong id="game-message">Ready?</strong><span id="game-hint">Start 버튼을 눌러 시작하세요.</span></div>
-            </div>
-            <p id="game-status" class="sr-only" role="status" aria-live="polite">게임 준비</p>
+        <div id="snake-view" class="game-view" data-game-view="snake" hidden>
+          <div class="game-topbar"><button class="back-button" type="button" data-game-back>← Games</button><strong>Snake</strong><div class="mini-score">Score <b id="score">0</b> · Best <b id="best-score">0</b></div></div>
+          <div class="game-layout">
+            <div class="canvas-wrap square"><canvas id="game-canvas" width="400" height="400" aria-label="지렁이 게임 보드" tabindex="0"></canvas><div id="game-overlay" class="game-overlay"><strong id="game-message">Ready?</strong><span id="game-hint">Start를 눌러 시작하세요.</span></div></div>
+            <div class="game-controls"><div class="game-actions"><button id="start-game" class="button primary" type="button">Start</button><button id="pause-game" class="button secondary" type="button" disabled>Pause</button><button id="restart-game" class="button secondary" type="button">Restart</button></div><div class="direction-pad" aria-label="Snake 모바일 방향키"><button data-snake-direction="up" aria-label="위">↑</button><button data-snake-direction="left" aria-label="왼쪽">←</button><button data-snake-direction="down" aria-label="아래">↓</button><button data-snake-direction="right" aria-label="오른쪽">→</button></div><p>Arrow / WASD · Space pause · Swipe</p></div>
           </div>
-          <div class="game-sidebar">
-            <div class="game-actions"><button id="start-game" class="button primary" type="button">Start</button><button id="pause-game" class="button secondary" type="button" disabled>Pause</button><button id="restart-game" class="button secondary" type="button">Restart</button></div>
-            <div class="touch-controls" aria-label="모바일 게임 방향키">
-              <button type="button" data-direction="up" aria-label="위로 이동">↑</button>
-              <button type="button" data-direction="left" aria-label="왼쪽으로 이동">←</button>
-              <button type="button" data-direction="down" aria-label="아래로 이동">↓</button>
-              <button type="button" data-direction="right" aria-label="오른쪽으로 이동">→</button>
-            </div>
-            <div class="instructions"><h3>How to play</h3><p><kbd>Arrow keys</kbd> 또는 <kbd>WASD</kbd>로 이동합니다.</p><p><kbd>Space</kbd>로 일시정지·재개합니다. 모바일에서는 버튼이나 보드 Swipe를 사용할 수 있습니다.</p></div>
-          </div>
+          <p id="game-status" class="sr-only" role="status" aria-live="polite">게임 준비</p>
         </div>
-      </div>
-    </section>
 
-    <section id="contact" class="section contact-section" aria-labelledby="contact-title">
-      <div class="container split-layout"><div><p class="section-kicker">05 · Contact</p><h2 id="contact-title">연락하기</h2></div><div class="prose"><p>업무 관련 문의는 이메일로 연락해 주세요.</p><a class="contact-placeholder" href="mailto:moonmoon.kim@samsung.com">moonmoon.kim@samsung.com</a></div></div>
-    </section>
-  </main>
+        <div id="tetris-view" class="game-view" data-game-view="tetris" hidden>
+          <div class="game-topbar"><button class="back-button" type="button" data-game-back>← Games</button><strong>Tetris</strong><div class="mini-score">Score <b id="tetris-score">0</b> · Lines <b id="tetris-lines">0</b> · Best <b id="tetris-best">0</b></div></div>
+          <div class="game-layout tetris-layout">
+            <div class="canvas-wrap tetris-board"><canvas id="tetris-canvas" width="300" height="600" aria-label="테트리스 게임 보드" tabindex="0"></canvas><div id="tetris-overlay" class="game-overlay"><strong id="tetris-message">Ready?</strong><span id="tetris-hint">Start를 눌러 시작하세요.</span></div></div>
+            <div class="game-controls"><div class="game-actions"><button id="tetris-start" class="button primary" type="button">Start</button><button id="tetris-pause" class="button secondary" type="button" disabled>Pause</button><button id="tetris-restart" class="button secondary" type="button">Restart</button></div><div class="tetris-pad" aria-label="Tetris 모바일 조작"><button data-tetris-action="left" aria-label="왼쪽">←</button><button data-tetris-action="rotate" aria-label="회전">↻</button><button data-tetris-action="right" aria-label="오른쪽">→</button><button data-tetris-action="down" aria-label="아래">↓</button><button data-tetris-action="drop" aria-label="바닥까지 내리기">Drop</button></div><p>← → move · ↑ rotate · ↓ down · Space drop · P pause</p></div>
+          </div>
+          <p id="tetris-status" class="sr-only" role="status" aria-live="polite">테트리스 준비</p>
+        </div>
+      </section>
 
-  <footer class="site-footer"><div class="container"><p>© <span id="current-year"></span> moonmoonbot</p><a href="#home">맨 위로 ↑</a></div></footer>
+      <section id="contact" class="page-panel info-panel" data-panel="contact" aria-labelledby="contact-title" hidden>
+        <div class="panel-heading"><p class="eyebrow">04 · Contact</p><h2 id="contact-title">Let's talk.</h2><p>업무 관련 문의는 이메일로 연락해 주세요.</p></div>
+        <a class="email-card" href="mailto:moonmoon.kim@samsung.com"><span>Email</span><strong>moonmoon.kim@samsung.com</strong><b>메일 보내기 →</b></a>
+      </section>
+    </main>
+    <footer><span>© <b id="current-year"></b> moonmoonbot</span><span class="footer-status">Available on GitHub Pages</span></footer>
+  </div>
   <script src="game.js"></script>
+  <script src="tetris.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
