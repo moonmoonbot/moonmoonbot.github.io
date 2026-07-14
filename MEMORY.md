@@ -598,3 +598,16 @@ Change Item 현재 상태:
 - 전체 상태: DEPLOY_APPROVAL_REQUIRED
 - Rollback 기준: 8181ab3
 ```
+
+## 20. CR-003 Deployment
+
+```text
+- 사용자 승인: 확인
+- 구현 commit: a109267
+- push 결과: 8181ab3..a109267 main -> main
+- 배포 URL: https://moonmoonbot.github.io
+- 배포 검증: 공개 script.js에서 게임 선택 scrollIntoView(center) 반영 확인
+- CR-003 상태: DEPLOYED
+- 새 마지막 정상 배포 commit: a109267
+- 최종 상태: DEPLOYED
+```

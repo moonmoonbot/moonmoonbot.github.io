@@ -1175,6 +1175,16 @@ Overall: HITL_REQUIRED
 - 다음 상태: DEPLOY_APPROVAL_REQUIRED
 ```
 
+```text
+[CRL-004 Deployment]
+- Approval: confirmed
+- Commit: a109267
+- Push: success
+- Pages verifier: public script.js contains scrollIntoView with center alignment
+- CR-003: DEPLOYED
+- Overall: DEPLOYED
+```
+
 CRL-001은 실제 요청 확보로 `PASSED`, CRL-002는 구체 요청 재현 완료로 `PASSED`, CRL-003은 구현/검증 완료로 `PASSED` 처리한다.
 
 ```text
